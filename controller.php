@@ -69,8 +69,8 @@ else if ($_POST['page'] == 'MainPage')
             {
                 $display_type = 'editsurvey';  
                 include('editsurvey.php');
-            } else {
-
+            } else 
+            {
                 $display_type = 'takesurvey';                               
                 include('survey.php');
             }
@@ -78,6 +78,18 @@ else if ($_POST['page'] == 'MainPage')
             
         default:
             echo 'Unclear of what you want: ' . $command . '<br>';
+    }
+}
+
+else if ($_POST['page'] == 'EditSurvey')
+{
+    switch($_POST['command']) {
+        case 'CreateQuestion':
+            $result = post_question($_POST['question'], $_SESSION['username']); // in model.php
+            break;
+            
+        default:
+            echo 'Editing didn\'t work: ' .$command . '<br>';
     }
 }
 

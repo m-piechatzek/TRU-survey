@@ -18,7 +18,7 @@
 	        <div class='row'>
 	            <div class='col-md-12 text-center'>
 	                <h1>TRU Survey</h1>
-	                <h3>Welcome <?php echo $username; ?>!</h3>
+	                <h3>Welcome <?php echo $_SESSION['username']; ?>!</h3>
 					<!-- If user is admin then they are only allowed to edit survey -->
 					</br>
 					<?php

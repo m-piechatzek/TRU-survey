@@ -85,7 +85,7 @@ else if ($_POST['page'] == 'EditSurvey')
 {
     switch($_POST['command']) {
         case 'CreateQuestion':
-            $result = post_question($_POST['question'], $_SESSION['username']); // in model.php
+            $result = post_question($_POST['question'], $_POST['answer1'],$_POST['answer2'],$_POST['answer3'], $_POST['answer4'], $_SESSION['username']); // in model.php
             break;
             
         default:

@@ -41,6 +41,8 @@ if ($_POST['page'] == 'StartPage')
                     $error_msg_username = '';
                     $error_msg_password = '';
                     $display_type = 'signin';
+                    $_SESSION['username'] = $_POST['username'];
+                    $username = $_POST['username'];
                     include('homepage.php');
                 } else {
                     $error_msg_username = 'Error!';

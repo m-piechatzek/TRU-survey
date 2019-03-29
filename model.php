@@ -44,7 +44,7 @@ function user_exist($username)
 *   Queries
 */
 
-function create_question($q, $u)  // question, username
+function create_question($q, $a1, $a2, $a3, $a4, $u)  // question, username
 {
     global $conn;
     
@@ -59,9 +59,9 @@ function create_question($q, $u)  // question, username
         return;
     }
     
-    $current_date = date('Ymd');
     // insert statement
-    $sql = "insert into Questions values  (NULL, '$q', $current_date, $uid)";
+    // "INSERT INTO Persons (FirstName,LastName,Age) VALUES ('Glenn','Quagmire',33)"
+    $sql = "INSERT INTO SurveyQuestions (survey_questions_id, question, answer1, answer2, answer3, answer4, survey_id) values  (NULL, '$q', '$a1', '$a2', '$a3', '$a4', 1)";
     $result = mysqli_query($conn, $sql);
     return true;
 }

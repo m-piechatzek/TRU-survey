@@ -9,7 +9,7 @@
 <img src="logo.png" class="mx-auto d-block" alt="Responsive image">
 <div class="container">
 	<div class="row">
-		<div class="col-md-12 text-center">
+		<div class="col-md-6">
 			<h1>TRU Survey</h1>
 			<div class="list-survey"></div>
 		</div>
@@ -18,37 +18,44 @@
 <script>
 	$(document).ready(function() {
         var url = 'controller.php'; 
+        console.log("inside document ready");
         var query = { page: "TakeSurvey", command: "ShowSurvey"}; 
-          // $.post(url,
-          //           query,
-          //           function(data) {
-                       // var questions = JSON.parse(data);
-                       // var table = '<table class="table table-condensed">';
-                       //  table += '<tr>';
-                       
-                       // for(var title in questions[0]){
-                       //      table += '<th>' + title + "</th>";
-                       // }
-                       // table += '</tr>';
+          $.post(url,
+              query,
+              function(data) {
+                 var questions = JSON.parse(data);
+                 var form = '<form action="controller.php" method="post">'
+                    for(var i =0; i< questions.length; i++){
+                 
+                      form+= '<div>';
+                      form += '<label>' + questions[i].question + '</label>';
+                      form += '</div>';
 
-                       
-                       // for(var i =0; i< questions.length; i++){
-                       //      table += '<tr>';
-                       
-                       // for(q in questions[i]){
+                      form+= '<div class="custom-control custom-radio">';
+                      form += '<input class="custom-control-input" type="radio" name="' + questions[i].survey_questions_id + '" value="' + questions[i].answer1 + '">';
+                      form += '<label class="custom-control-label">' + questions[i].answer1 + '</label>';
+                      form += '</div>';
 
-                       //      table +='<td>' + questions[i][q] + '</td>';
-                       //      // console.log(questions[i])
-    
-                       // }
-                      	// table += '<td><button onclick="delete_question(\''  + questions[i].Question + '\')">Delete</button></td>';
-                      	// //list_assingments(this, \''+ obj[i].id + '\')
-                       //  table  += '</tr>';
-                       
-                       // }
-                       // table += '</table>';
-                       // $('#list-survey').html(table);
-                // });
+                      form+= '<div class="custom-control custom-radio">';
+                      form += '<input class="custom-control-input" type="radio" name="' + questions[i].survey_questions_id + '" value="' + questions[i].answer2 + '">';
+                      form += '<label class="custom-control-label">' + questions[i].answer2 + '</label>';
+                      form += '</div>';
+
+                      form+= '<div class="custom-control custom-radio">';
+                      form += '<input class="custom-control-input" type="radio" name="' + questions[i].survey_questions_id + '" value="' + questions[i].answer3 + '">';
+                      form += '<label class="custom-control-label">' + questions[i].answer3 + '</label>';
+                      form += '</div>';
+
+                     form+= '<div class="custom-control custom-radio">';
+                      form += '<input class="custom-control-input" type="radio" name="' + questions[i].survey_questions_id + '" value="' + questions[i].answer4 + '">';
+                      form += '<label class="custom-control-label">' + questions[i].answer4 + '</label>';
+                      form += '</div>';
+                    }
+                  form+= '<div>';
+                  form += '<input type="submit" value="Submit">';
+                      form += '</div>';
+                 $('.list-survey').html(form);
+              });
 	});
 </script>
 

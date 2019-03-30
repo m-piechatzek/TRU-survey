@@ -130,6 +130,8 @@ else if ($_POST['page'] == 'TakeSurvey')
 {
     switch($_POST['command']) {
         case 'ShowSurvey':
+
+            // echo '<script>console.log("in ShowSurvey")</script>';
             $result = survey();
             break;
 

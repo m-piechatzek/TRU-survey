@@ -41,6 +41,8 @@ if ($_POST['page'] == 'StartPage')
                     $error_msg_username = '';
                     $error_msg_password = '';
                     $display_type = 'signin';
+                    $_SESSION['username'] = $_POST['username'];
+                    $username = $_POST['username'];
                     include('homepage.php');
                 } else {
                     $error_msg_username = 'Error!';
@@ -67,7 +69,8 @@ else if ($_POST['page'] == 'MainPage')
         case 'Survey':
             if ($_SESSION['username'] == 'admin')
             {
-                $display_type = 'editsurvey';  
+                // $_POST['command'] = '';
+                $display_type = 'editsurvey'; 
                 include('editsurvey.php');
             } else 
             {
@@ -85,12 +88,54 @@ else if ($_POST['page'] == 'EditSurvey')
 {
     switch($_POST['command']) {
         case 'CreateQuestion':
-            $result = post_question($_POST['question'], $_SESSION['username']); // in model.php
+            if(isset($_POST['question'])){
+           // echo '<script>console.log("in CreateQuestion")</script>';
+           //          echo 'Editing didn\'t work: ' .$_POST['command'] . '<br>';
+           //                      echo 'Editing didn\'t work: ' .$_POST['question'] . '<br>';
+            $result = create_question(
+                $_POST['question'], 
+                $_POST['answer1'], 
+                $_POST['answer2'], 
+                $_POST['answer3'], 
+                $_POST['answer4'], 
+                $_SESSION['username']
+            ); 
+        }else {
+                $display_type = 'editsurvey'; 
+                include('editsurvey.php');
+        }
             break;
+
+        case 'ListQuestions':
+            $result = list_survey_questions();
+            break;
+
+        case 'DeleteQuestion':
+            $result = delete_question($_POST['question']);
+            break;
+
+        case 'SignOut':
+            session_unset();
+            session_destroy();
+            $display_type = 'no-signin';
+            include('index.php');
+        break;
             
         default:
-            echo 'Editing didn\'t work: ' .$command . '<br>';
+            echo 'Editing didn\'t work: ' .$_POST['command'] . '<br>';
     }
 }
 
+else if ($_POST['page'] == 'TakeSurvey') 
+{
+    switch($_POST['command']) {
+        case 'ShowSurvey':
+            $result = survey();
+            break;
+
+        default:
+            echo 'Survey didn\'t work: ' .$_POST['command'] . '<br>';        
+    }
+
+}
 ?>   

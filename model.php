@@ -44,7 +44,7 @@ function user_exist($username)
 *   Queries
 */
 
-function create_question($q, $u)  // question, username
+function create_question($q, $a1, $a2, $a3, $a4, $u)  // question, username
 {
     global $conn;
     
@@ -58,16 +58,49 @@ function create_question($q, $u)  // question, username
         echo "Posting a question failed!";
         return;
     }
+   // echo '<script>console.log("in model create_question")</script>';
     
-    $current_date = date('Ymd');
     // insert statement
-    $sql = "insert into Questions values  (NULL, '$q', $current_date, $uid)";
+    // "INSERT INTO Persons (FirstName,LastName,Age) VALUES ('Glenn','Quagmire',33)"
+    $sql = "INSERT INTO SurveyQuestions (survey_questions_id, question, answer1, answer2, answer3, answer4, survey_id) values  (NULL, '$q', '$a1', '$a2', '$a3', '$a4', 1)";
     $result = mysqli_query($conn, $sql);
     return true;
 }
 
-// function list_questions(???)
-// {
-//     ???  // send the JSON string of question records back to the client
-// }
+function list_survey_questions()
+{
+    global $conn;
+    
+    $sql = "select question AS 'Question', 
+    answer1 AS 'Answer 1',
+    answer2 AS 'Answer 2',
+    answer3 AS 'Answer 3',
+    answer4 AS 'Answer 4' 
+     from SurveyQuestions";
+    $result = mysqli_query($conn, $sql);
+    $data = array();
+    $i = 0;
+    while($row = mysqli_fetch_assoc($result))
+        $data[$i++] = $row;
+    echo json_encode($data);
+}
+
+function delete_question($q) {
+   
+    global $conn;
+
+    $sql = "DELETE FROM SurveyQuestions WHERE question = '$q'";
+    $result = mysqli_query($conn, $sql);
+    return true;
+}
+
+function survey() {
+    
+    global $conn;
+
+    $sql = "SELECT * FROM SurveyQuestions";  
+    
+    $result = mysqli_query($conn, $sql);
+    return true;  
+}
 ?>   

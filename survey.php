@@ -19,6 +19,36 @@
 	$(document).ready(function() {
         var url = 'controller.php'; 
         var query = { page: "TakeSurvey", command: "ShowSurvey"}; 
+          // $.post(url,
+          //           query,
+          //           function(data) {
+                       // var questions = JSON.parse(data);
+                       // var table = '<table class="table table-condensed">';
+                       //  table += '<tr>';
+                       
+                       // for(var title in questions[0]){
+                       //      table += '<th>' + title + "</th>";
+                       // }
+                       // table += '</tr>';
+
+                       
+                       // for(var i =0; i< questions.length; i++){
+                       //      table += '<tr>';
+                       
+                       // for(q in questions[i]){
+
+                       //      table +='<td>' + questions[i][q] + '</td>';
+                       //      // console.log(questions[i])
+    
+                       // }
+                      	// table += '<td><button onclick="delete_question(\''  + questions[i].Question + '\')">Delete</button></td>';
+                      	// //list_assingments(this, \''+ obj[i].id + '\')
+                       //  table  += '</tr>';
+                       
+                       // }
+                       // table += '</table>';
+                       // $('#list-survey').html(table);
+                // });
 	});
 </script>
 

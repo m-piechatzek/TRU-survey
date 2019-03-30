@@ -101,6 +101,10 @@ function survey() {
     $sql = "SELECT * FROM SurveyQuestions";  
     
     $result = mysqli_query($conn, $sql);
-    return true;  
+    $data = array();
+    $i = 0;
+    while($row = mysqli_fetch_assoc($result))
+        $data[$i++] = $row;
+    echo json_encode($data);
 }
 ?>   

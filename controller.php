@@ -1,9 +1,9 @@
 <?php
-if (empty($_POST['page'])) { 
-    $display_type = 'no-signin';  
-    include ('index.php');
-    exit();
-}
+// if (empty($_POST['page'])) { 
+//     $display_type = 'no-signin';  
+//     include ('index.php');
+//     exit();
+// }
 
 session_start();
 

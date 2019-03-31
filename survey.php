@@ -28,14 +28,15 @@
 	</div>
 </div>
 <script>
-	$(document).ready(function() {
+        var questions = '';
+  $(document).ready(function() {
         var url = 'controller.php'; 
         console.log("inside document ready");
         var query = { page: "TakeSurvey", command: "ShowSurvey"}; 
           $.post(url,
               query,
               function(data) {
-                 var questions = JSON.parse(data);
+                 questions = JSON.parse(data);
                  var form = '<br><form class="justify-content-center" action="controller.php" method="post">'
                     for(var i =0; i< questions.length; i++){
                  
@@ -67,13 +68,18 @@
                       // form += '<br><br><br>';
                     }
                     form+= '<div class="col text-center">';
-                      form += '<input class="btn btn-secondary" type="submit" value="Submit">';
+                      form += '<input onclick="sendSurvey()" class="btn btn-secondary" type="submit" value="Submit">';
                       form += '<input class="m-2 btn btn-danger" type="reset" value="Clear">';
                     form += '</div>';
                   form += '</form>'
                  $('.list-survey').html(form);
               });
-	});
+          // when Survey is submitted
+  });
+      function sendSurvey() {
+        console.log("q",questions);
+      }
+
 </script>
 
 </body>

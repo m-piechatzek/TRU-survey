@@ -10,7 +10,8 @@ function insert_new_user($username, $password, $email)
         return false;
     else {
         $current_date = date('Ymd');
-        $sql = "insert into Users values (NULL, '$username', '$password', '$email', $current_date)";
+        $hashed_pass = hash('SHA256', $password);
+        $sql = "insert into Users values (NULL, '$username', '$hashed_pass', '$email', $current_date)";
         $result = mysqli_query($conn, $sql);
         return $result;
     }
@@ -20,7 +21,8 @@ function is_valid($username, $password)
 {
     global $conn;
     
-    $sql = "select * from Users where (Username = '$username' and Password = '$password')";
+    $hashed_pass = hash('SHA256', $password);
+    $sql = "select * from Users where (Username = '$username' and Password = '$hashed_pass')";
     $result = mysqli_query($conn, $sql);
     if (mysqli_num_rows($result) > 0)
         return true;
@@ -38,6 +40,33 @@ function user_exist($username)
         return true;
     else
         return false;
+}
+
+//Remove user from the database
+function unsubscribed($u) {
+
+    global $conn;
+
+    $sql = "SELECT `userID` FROM `Users` WHERE username = '$u'";
+    $result = mysqli_query($conn, $sql);
+    if (mysqli_num_rows($result) > 0) {
+        $row = mysqli_fetch_assoc($result);
+        $uid = $row['userID'];  // The column that include user ids
+
+        $sql2 = "DELETE FROM `Users` WHERE userID = '$uid'";
+        $result2 = mysqli_query($conn, $sql2);
+            if ($result2) {
+                $sql3 = "DELETE FROM `UserAnswers` WHERE userID ='$uid";
+                $result3 = mysqli_query($conn, $sql3);
+
+                return true;
+            }
+            else {
+                return false;
+            }
+    } else {
+        return false;
+    }
 }
 
 /*
@@ -112,7 +141,7 @@ function survey() {
 }
 
 function submitSurvey($survey, $u) {
-    print_r($survey);
+
     global $conn;
     
     $sql = "select * from Users where (Username = '$u')";
@@ -126,11 +155,11 @@ function submitSurvey($survey, $u) {
         return;
     }
     foreach ($survey as $key => $value) {
-print_r($uid . ' key: '. $key . 'value: ' . $value);
+
         $sql = "INSERT INTO UserAnswers (user_answers_id, survey_id, survey_questions_id, answer, userID) VALUES 
         (null, 1, '$key', '$value', '$uid')";
         $result = mysqli_query($conn, $sql);
-        // print_r("result" . ' =>' . $result);
+
     }
 
     return true;
@@ -207,6 +236,27 @@ function voteStudent() {
 
     //Number of people who answered the vote question
     $sql2 = "SELECT count(answer) AS COUNT FROM `UserAnswers` WHERE survey_questions_id = 46";
+    $result2 = mysqli_query($conn, $sql2);
+    $data2 = array();
+    $i2 = 0;
+        while($row2 = mysqli_fetch_assoc($result2))
+        $data2[$i2++] = $row2;
+    $percent = round(((float) $data[0]['COUNT']/ (float) $data2[0]['COUNT']) * 100.00);
+    return json_encode($percent); 
+}
+
+function sleepYesEveryone() {
+    global $conn;
+    //Number of people who answered yes to sleeping facilities
+    $sql = "SELECT COUNT(answer) AS COUNT FROM `UserAnswers` WHERE answer = 'Yes' and survey_questions_id = 47";
+    $result = mysqli_query($conn, $sql);
+    $data = array();
+    $i = 0;
+        while($row = mysqli_fetch_assoc($result))
+        $data[$i++] = $row;
+
+    //Number of people who answered the sleep question
+    $sql2 = "SELECT count(answer) AS COUNT FROM `UserAnswers` WHERE survey_questions_id = 47";
     $result2 = mysqli_query($conn, $sql2);
     $data2 = array();
     $i2 = 0;

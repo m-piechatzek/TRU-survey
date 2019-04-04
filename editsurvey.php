@@ -20,12 +20,19 @@
 					<button class="btn btn-secondary btn-sm" id="btn-show-survey">Show Survey</button>
 				</div>
 						
-				<div class="col-md-4 text-right">
+				<div class="col-md-2 text-right">
 					<form action="controller.php" method="post">
 						<input type='hidden' name='page' value='EditSurvey'></input>
 						<button class="btn btn-secondary btn-sm" type="submit" name='command' value='SignOut'>Sign Out</button>
 					</form>
+
 				</div>
+				<div class="col-md-2 text-left">          
+					<form action="controller.php" method="post">
+			            <input type='hidden' name='page' value='EditSurvey'></input>
+			            <button class="btn btn-secondary btn-sm" type="submit" name='command' value='Home'>Home</button>
+			        </form>
+      			</div>
 			</div>
 			<div class="row">
 				<div class="col-md-12">

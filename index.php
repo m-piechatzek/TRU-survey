@@ -1,3 +1,18 @@
+<?php
+
+  if (!isset($_SERVER['HTTPS'])) {
+
+    $url = 'https://' . $_SERVER['HTTP_HOST'] .
+
+           $_SERVER['REQUEST_URI'];  // start with /...
+
+    header("Location: " . $url);  // Redirect - 302
+
+    exit;                         // should be before any output
+
+  }                               // 
+
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -48,15 +63,15 @@
                     <input type='hidden' name='command' value='SignIn'></input>
                     <label class=''>Username</label> 
                     <input class="form-control" type='text' name='username' placeholder='Username' required></input>
-                    <!-- <?php if (!empty($error_msg_username)) echo $error_msg_username; ?> -->
+                     <?php if (!empty($error_msg_username)) echo $error_msg_username; ?>
                     <br>
                     <label class=''>Password</label> 
                     <input  class="form-control" type='password' name='password' placeholder='Password' required></input>
-                    <!-- <?php if (!empty($error_msg_password)) echo $error_msg_password; ?> -->
+                     <?php if (!empty($error_msg_password)) echo $error_msg_password; ?>
                     <br>
                     <button class="btn btn-primary" type='submit' value='Submit'>Login</button>
                     <button class="btn btn-secondary" type='reset' value='Reset'>Reset</button>
-                    <button class="btn btn-secondary" id='cancel-signin' type='cancel' value='Cancel'>Cancel</button>
+                    <button class="btn btn-secondary" id='cancel-signin' type='reset' value='Cancel'>Cancel</button>
                 </div>
             </form>
         </div>
@@ -71,19 +86,19 @@
                     
                     <label class=''>Username</label> 
                     <input  class="form-control" type='text' name='username' placeholder='Username' required></input>
-                    <!-- <?php if (!empty($error_msg_username)) echo $error_msg_username; ?> -->
+                    <?php if (!empty($error_msg_username)) echo $error_msg_username; ?>
                     <br>
                     <label class=''>Password</label> 
                     <input  class="form-control" type='password' name='password' placeholder='Password' required></input>
-                    <!-- <?php if (!empty($error_msg_password)) echo $error_msg_password; ?> -->
+                    <?php if (!empty($error_msg_password)) echo $error_msg_password; ?>
                     <br>
                     <label class=''>Email</label> 
                     <input  class="form-control" type='text' name='email' placeholder='Email' required></input>
-                    <!-- <?php if (!empty($error_msg_email)) echo $error_msg_email; ?> -->
+                    <?php if (!empty($error_msg_email)) echo $error_msg_email; ?>
                     <br>
                     <button class="btn btn-primary" type='submit' value='Submit'>Join</button>
                     <button class="btn btn-secondary" type='reset' value='Reset'>Reset</button>
-                    <button class="btn btn-secondary" id='cancel-join' type='cancel' value='Cancel'>Cancel</button>
+                    <button class="btn btn-secondary" id='cancel-join' type='reset' value='Cancel'>Cancel</button>
                 </div>
             </form>
             <div class="col-md-3"></div>  

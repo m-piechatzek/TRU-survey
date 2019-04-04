@@ -17,10 +17,14 @@
     </div>
     <div class="row">
           <div class="col-md-3">
-      <!-- <div class="list-survey"></div> -->
-<!--       <p><?php 
-      // echo $surveryquestions[0]['answer1'];
-      ?></p> -->
+          <form action="controller.php" method="post">
+            <input type='hidden' name='page' value='TakeSurvey'></input>
+            <button class="btn btn-secondary btn-sm" type="submit" name='command' value='SignOut'>Sign Out</button>
+          </form>
+          <form action="controller.php" method="post">
+            <input type='hidden' name='page' value='TakeSurvey'></input>
+            <button class="btn btn-secondary btn-sm" type="submit" name='command' value='Home'>Home</button>
+          </form>
     </div>
     <div class="col-md-6">
 			<div class="list-survey"></div>

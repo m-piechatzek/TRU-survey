@@ -54,18 +54,24 @@
         	</div>
         </header>
 			<div class="row">
-				<div class="col-md-6 text-right">
+				<div class="col-md-8">
 					<form action="controller.php" method="post">
 						<input type='hidden' name='page' value='MainPage'></input>
 						<input type='hidden' name='command' value='ShowData'></input>
 						<button id="btn-show-data" class="btn btn-secondary" type="submit" name='command' value='ShowData'>Show Data</button>
 					</form>
 				</div>
-				<div class="col-md-6">
+				<div class="col-md-2">
 					<form action="controller.php" method="post">
 						<input type='hidden' name='page' value='MainPage'></input>
 						<button class="btn btn-secondary" type="submit" name='command' value='SignOut'>Sign Out</button>
 					</form>
+				</div>
+				<div class="col-md-2 text-left">
+					<form action="controller.php" method="post">
+						<input type='hidden' name='page' value='MainPage'></input>
+						<button class="btn btn-danger" type="submit" name='command' value='Unsubscribe'>Unsubscribe</button>
+					</form>					
 				</div>
 			</div>	
 			<div class="row">	
@@ -92,28 +98,35 @@
 					<?php
 							}
 						}
-						echo $_POST['command']; echo $_POST['page']; echo $tookSurvey;
+						// echo $_POST['command']; echo $_POST['page']; echo $tookSurvey;
 					?>
 				</div>
 			</div> 
+			<div class="row">
+			
+			</div>
 			<div  id="dataid" class="show-data">
 	        	<div class="row">
 	        			<div class="col-md-1"></div>
+	        		<?php if(isset($international)) { ?>	
 	        		<div class="col-md-5 m-1 rounded highlight">
 	        			<h3>
 	        				<!-- style="display: none;" -->
 
-	        				<?php if(isset($international)) { ?> <div class="text-center"> <i class="fas fa-globe-americas fa-5x d-block"></i><?php echo $international; ?> % of International Students found TRU very welcoming</div>
-	        					<?php } ?>
+	        				 <div class="text-center"> <i class="fas fa-globe-americas fa-5x d-block"></i><?php echo $international; ?> % of International Students found TRU very welcoming</div>
+	        					
 
 	        			</h3>
 	        		</div>
+	        		<?php } ?>
+	        		<?php if(isset($parkingAlways)) {?>
 	        		<div class="col-md-5 m-1 rounded highlight">
 	        			<h3>
-		        			<?php if(isset($parkingAlways)) {?> <div class="text-center"> <i class="fas fa-car fa-5x"></i><br/> <?php echo $parkingAlways; ?>% of people always find parking at TRU</div>
-		        			<?php } ?>
+						 <div class="text-center"> <i class="fas fa-car fa-5x"></i><br/> <?php echo $parkingAlways; ?>% of people always find parking at TRU</div>
+		        			
 	        			</h3>
 	        		</div>
+	        		<?php } ?>
 	        		<div class="col-md-1"></div>
 	        	</div>
 <!-- 	        	<div class="row">
@@ -122,14 +135,23 @@
 	        	<div class="row">
 	        		<div class="col-md-1"></div>
 
+					<?php if(isset($voteYes)) {?>
 	        		<div class="col-md-5 m-1 rounded highlight">
 	        			<h3>
-	        			<?php if(isset($voteYes)) {?> <div class="text-center"> <i class="fas fa-vote-yea fa-5x"></i> <br><?php echo $voteYes; ?>% of people voted in for the student council </div>
-	        			<?php } ?>
+	        			 <div class="text-center"> <i class="fas fa-vote-yea fa-5x"></i> <br><?php echo $voteYes; ?>% of people voted in for the student council </div>
+	        			
 	        			</h3>
 	        		</div>
-	        		<div class="col-md-5 m-1 rounded highlight"></div>
+	        		<?php } ?>
+	        		<?php if(isset($sleepYes)) {?>
+	        		<div class="col-md-5 m-1 rounded highlight">
+	        			<h3>
+	        			 <div class="text-center"> <i class="fas fa-bed fa-5x"></i> <br><?php echo $sleepYes; ?>% of people said yes for sleep facilities on campus </div>
+	        			
+	        			</h3>
 
+	        		</div>
+					<?php } ?>
 	        		<div class="col-md-1"></div>
 	        	</div>
 			</div>           

@@ -18,26 +18,35 @@
     <div class="row">
           <div class="col-md-3">
       <!-- <div class="list-survey"></div> -->
+<!--       <p><?php 
+      // echo $surveryquestions[0]['answer1'];
+      ?></p> -->
     </div>
     <div class="col-md-6">
 			<div class="list-survey"></div>
 		</div>
         <div class="col-md-3">
       <!-- <div class="list-survey"></div> -->
+      <div style="display: none;" class="submit-survey-success"></div>
     </div>
 	</div>
 </div>
 <script>
         var questions = '';
+        var finalQuestions = [];
   $(document).ready(function() {
         var url = 'controller.php'; 
         console.log("inside document ready");
         var query = { page: "TakeSurvey", command: "ShowSurvey"}; 
-          $.post(url,
+
+          $.post( url,
               query,
               function(data) {
                  questions = JSON.parse(data);
-                 var form = '<br><form class="justify-content-center" action="controller.php" method="post">'
+                 var form = '<br><form id="submit-form-id" class="justify-content-center" action="controller.php" method="post">'
+                    form += '<input type="hidden" name="page" value="TakeSurvey">';
+                    form += '<input type="hidden" name="command" value="SubmitSurvey">';
+                    // form += '<input type="hidden" name="finalQuestionsSubmit[]" value="' + finalQuestionsFun() + '">';
                     for(var i =0; i< questions.length; i++){
                  
                       form+= '<div class="p-5 mb-3 rounded bg-light">';
@@ -68,17 +77,44 @@
                       // form += '<br><br><br>';
                     }
                     form+= '<div class="col text-center">';
-                      form += '<input onclick="sendSurvey()" class="btn btn-secondary" type="submit" value="Submit">';
+                      form += '<button id="btn-survey-submit" class="btn btn-secondary" type="submit" value="Submit">Submit</button>';
                       form += '<input class="m-2 btn btn-danger" type="reset" value="Clear">';
                     form += '</div>';
                   form += '</form>'
                  $('.list-survey').html(form);
-              });
-          // when Survey is submitted
-  });
-      function sendSurvey() {
-        console.log("q",questions);
-      }
+     
+
+                }).done(function() {
+          // This $.post doesn't work
+                $('#submit-form-id').submit(function(){
+                    console.log("inside function sendSurvey");
+                    for(var i = 0; i < questions.length; i++) {
+
+                      var key = questions[i].survey_questions_id;
+                      var value = $('input[name=' + questions[i].survey_questions_id + ']:checked', '#submit-form-id' ).val();
+                // test for empty value***********************
+                      finalQuestions.push({ key: value });
+                    }
+
+                    var url = 'controller.php'; 
+                    var query = { page: "TakeSurvey", command: "SubmitSurvey", finalQuestionsSubmit: finalQuestions }; 
+                    console.log(query);
+
+                    $.post(url, query)     
+                  });//closes $('#submit-form-id').submit
+                  
+                 });// closes $.post
+                // this is for the <input name="finalQuestionsSubmit" value
+                function finalQuestionsFun() {
+                    for(var i = 0; i < questions.length; i++) {
+                      var key = questions[i].survey_questions_id;
+                      var value = $('input[name=' + questions[i].survey_questions_id + ']:checked', '#submit-form-id' ).val();
+                      console.log(key + ' ' + value);
+                      finalQuestions.push({ key: value });
+                    }
+                  return finalQuestions;
+                }
+              });//closes document.onload
 
 </script>
 

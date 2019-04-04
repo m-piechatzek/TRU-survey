@@ -105,6 +105,114 @@ function survey() {
     $i = 0;
     while($row = mysqli_fetch_assoc($result))
         $data[$i++] = $row;
+    // print_r($data);
+    // return $data;
     echo json_encode($data);
+
+}
+
+function submitSurvey($survey, $u) {
+    print_r($survey);
+    global $conn;
+    
+    $sql = "select * from Users where (Username = '$u')";
+    $result = mysqli_query($conn, $sql);
+    if (mysqli_num_rows($result) > 0) {
+        $row = mysqli_fetch_assoc($result);
+        $uid = $row['userID'];  // The column that include user ids
+    }
+    else {
+        echo "Posting a survey failed!";
+        return;
+    }
+    foreach ($survey as $key => $value) {
+print_r($uid . ' key: '. $key . 'value: ' . $value);
+        $sql = "INSERT INTO UserAnswers (user_answers_id, survey_id, survey_questions_id, answer, userID) VALUES 
+        (null, 1, '$key', '$value', '$uid')";
+        $result = mysqli_query($conn, $sql);
+        // print_r("result" . ' =>' . $result);
+    }
+
+    return true;
+}
+
+//Check if user already took survey
+function user_took_survey($u) {
+    global $conn;
+
+    $sql = "SELECT * FROM UserAnswers ua, Users u WHERE ua.userID = u.userID AND u.username = '$u'";
+    $result = mysqli_query($conn, $sql);
+    if (mysqli_num_rows($result) > 0) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
+
+// DATA ANALYSIS 
+function internationalStudents() {
+    global $conn;
+
+    //Number of students who find it welcoming
+    $sql = "SELECT COUNT(answer) AS COUNT FROM `UserAnswers` WHERE answer = 'Very welcome' AND userID IN ( SELECT userID FROM UserAnswers where survey_questions_id = 42 AND answer = 'Student')";
+    $result = mysqli_query($conn, $sql);
+    $data = array();
+    $i = 0;
+        while($row = mysqli_fetch_assoc($result))
+        $data[$i++] = $row;
+    
+    //Number of users who find it welcoming
+    $sql2 = "SELECT count(answer) AS COUNT FROM `UserAnswers` WHERE survey_questions_id = 44";
+    $result2 = mysqli_query($conn, $sql2);
+    $data2 = array();
+    $i2 = 0;
+        while($row2 = mysqli_fetch_assoc($result2))
+        $data2[$i2++] = $row2;
+    $percent = round(((float) $data[0]['COUNT']/ (float) $data2[0]['COUNT']) * 100.00);
+     return json_encode($percent);
+}
+
+function parkingAlwaysEveryone() {
+    global $conn;
+    //Number of people who find parking always
+    $sql = "SELECT count(answer) AS COUNT FROM `UserAnswers` WHERE survey_questions_id = 45 AND answer = 'Always'";
+    $result = mysqli_query($conn, $sql);
+    $data = array();
+    $i = 0;
+        while($row = mysqli_fetch_assoc($result))
+        $data[$i++] = $row;
+
+    //Number of people who answered the parking question
+    $sql2 = "SELECT count(answer) AS COUNT FROM `UserAnswers` WHERE survey_questions_id = 45";
+    $result2 = mysqli_query($conn, $sql2);
+    $data2 = array();
+    $i2 = 0;
+        while($row2 = mysqli_fetch_assoc($result2))
+        $data2[$i2++] = $row2;
+    $percent = round(((float) $data[0]['COUNT']/ (float) $data2[0]['COUNT']) * 100.00);
+    return json_encode($percent);
+}
+
+function voteStudent() {
+    global $conn;
+    //Number of people who voted yes
+    $sql = "SELECT count(answer) AS COUNT FROM `UserAnswers` WHERE survey_questions_id = 46 AND answer = 'Yes'";
+    $result = mysqli_query($conn, $sql);
+    $data = array();
+    $i = 0;
+        while($row = mysqli_fetch_assoc($result))
+        $data[$i++] = $row;
+
+    //Number of people who answered the vote question
+    $sql2 = "SELECT count(answer) AS COUNT FROM `UserAnswers` WHERE survey_questions_id = 46";
+    $result2 = mysqli_query($conn, $sql2);
+    $data2 = array();
+    $i2 = 0;
+        while($row2 = mysqli_fetch_assoc($result2))
+        $data2[$i2++] = $row2;
+    $percent = round(((float) $data[0]['COUNT']/ (float) $data2[0]['COUNT']) * 100.00);
+    return json_encode($percent); 
 }
 ?>   

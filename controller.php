@@ -1,5 +1,11 @@
 <?php
-// if (empty($_POST['page'])) { 
+if (empty($_POST['page'])) { 
+    $display_type = 'no-signin';  
+    include ('index.php');
+    exit();
+}
+
+// if(empty($_SESSION['username'])) {
 //     $display_type = 'no-signin';  
 //     include ('index.php');
 //     exit();
@@ -9,7 +15,7 @@ session_start();
 
 require('model.php'); 
 
-// When commands come from StartPage
+// When commands come from StartPag
 if ($_POST['page'] == 'StartPage')
 {
     switch($_POST['command']) { 
@@ -26,6 +32,7 @@ if ($_POST['page'] == 'StartPage')
                 $_SESSION['signedin'] = 'YES';
                 $_SESSION['username'] = $_POST['username'];
                 $username = $_POST['username'];
+                $tookSurvey = user_took_survey($_SESSION['username']);
                 include ('homepage.php');
             }
             exit();
@@ -43,6 +50,7 @@ if ($_POST['page'] == 'StartPage')
                     $display_type = 'signin';
                     $_SESSION['username'] = $_POST['username'];
                     $username = $_POST['username'];
+                    $tookSurvey = user_took_survey($_SESSION['username']);
                     include('homepage.php');
                 } else {
                     $error_msg_username = 'Error!';
@@ -67,6 +75,8 @@ else if ($_POST['page'] == 'MainPage')
         break;
 
         case 'Survey':
+            userSessionEmpty($_SESSION['username']); 
+            
             if ($_SESSION['username'] == 'admin')
             {
                 // $_POST['command'] = '';
@@ -74,11 +84,22 @@ else if ($_POST['page'] == 'MainPage')
                 include('editsurvey.php');
             } else 
             {
-                $display_type = 'takesurvey';                               
+                $display_type = 'takesurvey';   
+                // $surveryquestions = survey(); 
+                // print_r($surveryquestions);
+                // exit;                           
                 include('survey.php');
             }
         break;
-            
+
+        case 'ShowData':
+            userSessionEmpty($_SESSION['username']); 
+            $international = internationalStudents();
+            $parkingAlways = parkingAlwaysEveryone();
+            $voteYes = voteStudent();
+            $tookSurvey = user_took_survey($_SESSION['username']);
+            include('homepage.php');
+           break; 
         default:
             echo 'Unclear of what you want: ' . $command . '<br>';
     }
@@ -88,6 +109,7 @@ else if ($_POST['page'] == 'EditSurvey')
 {
     switch($_POST['command']) {
         case 'CreateQuestion':
+            userSessionEmpty($_SESSION['username']); 
             if(isset($_POST['question'])){
            // echo '<script>console.log("in CreateQuestion")</script>';
            //          echo 'Editing didn\'t work: ' .$_POST['command'] . '<br>';
@@ -107,10 +129,12 @@ else if ($_POST['page'] == 'EditSurvey')
             break;
 
         case 'ListQuestions':
+            userSessionEmpty($_SESSION['username']); 
             $result = list_survey_questions();
             break;
 
         case 'DeleteQuestion':
+            userSessionEmpty($_SESSION['username']); 
             $result = delete_question($_POST['question']);
             break;
 
@@ -125,19 +149,42 @@ else if ($_POST['page'] == 'EditSurvey')
             echo 'Editing didn\'t work: ' .$_POST['command'] . '<br>';
     }
 }
-
 else if ($_POST['page'] == 'TakeSurvey') 
 {
+
     switch($_POST['command']) {
         case 'ShowSurvey':
-
-            // echo '<script>console.log("in ShowSurvey")</script>';
+            userSessionEmpty($_SESSION['username']); 
             $result = survey();
+  
+            break;
+
+        case 'SubmitSurvey':
+            userSessionEmpty($_SESSION['username']); 
+             // echo "heeloooo" . $_POST['finalQuestionsSubmit'];
+        unset($_POST['page']);
+        unset($_POST['command']);
+print_r($_POST);
+// print_r($_POST[42]);
+//print_r($_POST['finalQuestionsSubmit']);
+//print_r($_POST['page']);
+
+            $result = submitSurvey($_POST, $_SESSION['username']);
+            $tookSurvey = user_took_survey($_SESSION['username']);
+            include('homepage.php');
             break;
 
         default:
             echo 'Survey didn\'t work: ' .$_POST['command'] . '<br>';        
     }
 
+}
+
+function userSessionEmpty($u) {
+    if(empty($u)) {
+        $display_type = 'no-signin';  
+        include ('index.php');
+        exit();
+     }
 }
 ?>   

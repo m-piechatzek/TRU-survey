@@ -5,6 +5,11 @@
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 </head>
+<!-- <style type="text/css">
+	.delete {
+		background-color: none;
+	}
+</style> -->
 <body>
 	<img src="logo.png" class="mx-auto d-block" alt="Responsive image">
 	    <div class="container">
@@ -45,22 +50,22 @@
 						<div class="form-group">	
 							<input type='hidden' name='page' value='EditSurvey'></input>
 							<label>Enter Question</label>
-							<textarea form='survey-edit-form' class="form-control" id="add-question" name="survey-question" required></textarea>
+							<textarea form='survey-edit-form' class="form-control" id="add-question" name="survey-question" autofocus required></textarea>
 						</div>
 						<div class="form-group">	
 							<label>Enter Answers</label>
 								<div class="form-row">	
 									<div class="col">
-										<input class="form-control" type="text" id="survey-a1" autofocus required>
+										<input class="form-control" type="text" id="survey-a1" required>
 									</div>
 									<div class="col">
-										<input class="form-control" type="text" id="survey-a2" autofocus required>
+										<input class="form-control" type="text" id="survey-a2" required>
 									</div>
 									<div class="col">	
-										<input class="form-control" type="text" id="survey-a3" autofocus required>
+										<input class="form-control" type="text" id="survey-a3" required>
 									</div>
 									<div class="col">	
-										<input class="form-control" type="text" id="survey-a4" autofocus required>
+										<input class="form-control" type="text" id="survey-a4" required>
 									</div>
 								</div>
 						</div>
@@ -119,6 +124,7 @@
 
 		<!-- List Survey Questions -->
 		<script>
+			var count = 0;
         $('#btn-show-survey').click(function()
             {
                 var url = 'controller.php'; 
@@ -137,19 +143,16 @@
                        table += '</tr>';
 
                        
-                       for(var i =0; i< questions.length; i++){
-                            table += '<tr>';
-                       
-                       for(q in questions[i]){
-
-                            table +='<td>' + questions[i][q] + '</td>';
-                            // console.log(questions[i])
-    
-                       }
-                      	table += '<td><button onclick="delete_question(\''  + questions[i].Question + '\')">Delete</button></td>';
-                      	//list_assingments(this, \''+ obj[i].id + '\')
-                        table  += '</tr>';
-                       
+                       for(var i =0; i< questions.length; i++) {
+                       		count++;
+                            table += '<tr id="delete'+count+'">';
+	                       for(q in questions[i]) {
+	                            table +='<td>' + questions[i][q] + '</td>';   
+	                       }
+	                      	table += '<td><button onclick="delete_question(\'' + questions[i].Question + '\')">Delete</button></td>';
+	                      	//list_assingments(this, \''+ obj[i].id + '\')
+	                        table  += '</tr>';
+	                       
                        }
                        table += '</table>';
                        $('#list-survey').html(table);
@@ -157,8 +160,7 @@
             });
 		
         	function delete_question(question) {
-        		console.log("delete question", question);
-
+				$( '#delete'+count+'').css("background-color", "red");
         		var url = 'controller.php'; 
         		var query = { page:"EditSurvey", command: "DeleteQuestion", question: question};
 

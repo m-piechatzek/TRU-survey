@@ -16,25 +16,28 @@
       </div>
     </div>
     <div class="row">
-          <div class="col-md-3">
-          <form action="controller.php" method="post">
-            <input type='hidden' name='page' value='TakeSurvey'></input>
-            <button class="btn btn-secondary btn-sm" type="submit" name='command' value='SignOut'>Sign Out</button>
-          </form>
-          <form action="controller.php" method="post">
-            <input type='hidden' name='page' value='TakeSurvey'></input>
-            <button class="btn btn-secondary btn-sm" type="submit" name='command' value='Home'>Home</button>
-          </form>
+      <div class="col-md-6 text-right">
+        <form action="controller.php" method="post">
+          <input type='hidden' name='page' value='TakeSurvey'></input>
+          <button class="btn btn-secondary btn-sm" type="submit" name='command' value='SignOut'>Sign Out</button>
+        </form>
+      </div>
+      <div class="col-md-6">
+        <form action="controller.php" method="post">
+          <input type='hidden' name='page' value='TakeSurvey'></input>
+          <button class="btn btn-secondary btn-sm" type="submit" name='command' value='Home'>Home</button>
+        </form>
+      </div>
     </div>
-    <div class="col-md-6">
-			<div class="list-survey"></div>
-		</div>
-        <div class="col-md-3">
-      <!-- <div class="list-survey"></div> -->
-      <div style="display: none;" class="submit-survey-success"></div>
+    <div class="row">
+      <div class="col-md-3"></div>
+      <div class="col-md-6">
+          <div class="list-survey"></div>
+      </div>
+      <div class="col-md-3">
+        <div style="display: none;" class="submit-survey-success"></div>
+      </div>
     </div>
-	</div>
-</div>
 <script>
         var questions = '';
         var finalQuestions = [];
@@ -59,22 +62,22 @@
                         // form += '</div>';
                         // form += '<br>';      
                         form+= '<div class="form-check form-group">';
-                          form += '<input class="form-check-input" type="radio" name="' + questions[i].survey_questions_id + '" value="' + questions[i].answer1 + '">';
+                          form += '<input class="form-check-input" type="radio" name="' + questions[i].survey_questions_id + '" value="' + questions[i].answer1 + '" required>';
                           form += '<label class="form-check-label">' + questions[i].answer1 + '</label>';
                         form += '</div>';
 
                         form+= '<div class="form-check form-group">';
-                          form += '<input class="form-check-input" type="radio" name="' + questions[i].survey_questions_id + '" value="' + questions[i].answer2 + '"> ';
+                          form += '<input class="form-check-input" type="radio" name="' + questions[i].survey_questions_id + '" value="' + questions[i].answer2 + '" required> ';
                           form += '<label class="form-check-label">' + questions[i].answer2 + '</label>';
                         form += '</div>';
 
                         form+= '<div class="form-check form-group">';
-                          form += '<input class="form-check-input" type="radio" name="' + questions[i].survey_questions_id + '" value="' + questions[i].answer3 + '">';
+                          form += '<input class="form-check-input" type="radio" name="' + questions[i].survey_questions_id + '" value="' + questions[i].answer3 + '" required>';
                           form += '<label class="form-check-label">' + questions[i].answer3 + '</label>';
                         form += '</div>';
 
                         form+= '<div class="form-check form-group">';
-                          form += '<input class="form-check-input" type="radio" name="' + questions[i].survey_questions_id + '" value="' + questions[i].answer4 + '">';
+                          form += '<input class="form-check-input" type="radio" name="' + questions[i].survey_questions_id + '" value="' + questions[i].answer4 + '" required>';
                           form += '<label class="form-check-label">' + questions[i].answer4 + '</label>';
                         form += '</div>';
                       form += '</div>';

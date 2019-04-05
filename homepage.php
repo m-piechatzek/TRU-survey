@@ -36,13 +36,23 @@
 						height: 100px;
 			width: 100vw;
 		}
+		.tru-size {
+			height: 50px;
+		}
+		.footer {
+			min-height: 150px;
+			width: 100vw;
+			background-color: #013E51;
+			padding: 3%;
+			color: white;
+		}
 
 	</style>
 </head>
 <body>
-					<div class="header-line mw-100 color-back">
-	                <h1>TRU Survey</h1>
-	                </div>
+	<div class="header-line mw-100 color-back">
+	    <h1>TRU Survey</h1>
+	</div>
         <div class='container color-back'>
         <!-- Header -->
         <header>   	
@@ -54,20 +64,20 @@
         	</div>
         </header>
 			<div class="row">
-				<div class="col-md-8">
+				<div class="col-md-4 text-right">
 					<form action="controller.php" method="post">
 						<input type='hidden' name='page' value='MainPage'></input>
 						<input type='hidden' name='command' value='ShowData'></input>
 						<button id="btn-show-data" class="btn btn-secondary" type="submit" name='command' value='ShowData'>Show Data</button>
 					</form>
 				</div>
-				<div class="col-md-2">
+				<div class="col-md-4 text-center">
 					<form action="controller.php" method="post">
 						<input type='hidden' name='page' value='MainPage'></input>
 						<button class="btn btn-secondary" type="submit" name='command' value='SignOut'>Sign Out</button>
 					</form>
 				</div>
-				<div class="col-md-2 text-left">
+				<div class="col-md-4 text-left">
 					<form action="controller.php" method="post">
 						<input type='hidden' name='page' value='MainPage'></input>
 						<button class="btn btn-danger" type="submit" name='command' value='Unsubscribe'>Unsubscribe</button>
@@ -95,6 +105,9 @@
 						<input type='hidden' name='page' value='MainPage'></input>
 						<button class="btn btn-primary survey" type="submit" name='command' value='Survey'>Take Survey</button>
 					</form>
+					<br>
+					<h2 class="rounded highlight"> Please complete the TRU survey if you haven't already done so! Only one attempt is allowed. </h2>
+					<br>
 					<?php
 							}
 						}
@@ -107,31 +120,23 @@
 			</div>
 			<div  id="dataid" class="show-data">
 	        	<div class="row">
-	        			<div class="col-md-1"></div>
+	        		<div class="col-md-1"></div>
 	        		<?php if(isset($international)) { ?>	
 	        		<div class="col-md-5 m-1 rounded highlight">
 	        			<h3>
-	        				<!-- style="display: none;" -->
-
-	        				 <div class="text-center"> <i class="fas fa-globe-americas fa-5x d-block"></i><?php echo $international; ?> % of International Students found TRU very welcoming</div>
-	        					
-
+						 <div class="text-center"> <i class="fas fa-globe-americas fa-5x d-block"></i><?php echo $international; ?> % of International Students found TRU very welcoming</div>
 	        			</h3>
 	        		</div>
 	        		<?php } ?>
 	        		<?php if(isset($parkingAlways)) {?>
 	        		<div class="col-md-5 m-1 rounded highlight">
 	        			<h3>
-						 <div class="text-center"> <i class="fas fa-car fa-5x"></i><br/> <?php echo $parkingAlways; ?>% of people always find parking at TRU</div>
-		        			
+						 <div class="text-center"> <i class="fas fa-car fa-5x"></i><br/> <?php echo $parkingAlways; ?>% of people always find parking at TRU</div>		
 	        			</h3>
 	        		</div>
 	        		<?php } ?>
 	        		<div class="col-md-1"></div>
 	        	</div>
-<!-- 	        	<div class="row">
-	        		
-	        	</div> -->
 	        	<div class="row">
 	        		<div class="col-md-1"></div>
 
@@ -156,12 +161,15 @@
 	        	</div>
 			</div>           
     	</div>
+	<footer class="footer">
+		<img class="tru-size" src="trureverse.png">
+		<div>
+			805 TRU Way 
+			Kamloops, BC V2C 0C8 
+			Canada 
+			1-250-828-5000
+		</div>  
 
-    	<script>
-    		$(document).ready(function(){
-    
-    		    		
-    	});
-    	</script>
+	</footer>
 </body>
 </html>

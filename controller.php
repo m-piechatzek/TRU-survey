@@ -193,6 +193,7 @@ else if ($_POST['page'] == 'TakeSurvey')
             userSessionEmpty($_SESSION['username']); 
             $tookSurvey = user_took_survey($_SESSION['username']);
             include('homepage.php');
+        break;
 
         default:
             echo 'Survey didn\'t work: ' .$_POST['command'] . '<br>';        
